@@ -37,8 +37,8 @@
   a{color:inherit}
   ::selection{background:var(--fg);color:#0a0a0a}
 
-  .wrap{max-width:1040px;margin:0 auto;padding-inline:24px}
-  @media (min-width:640px){.wrap{padding-inline:48px}}
+  .wrap{max-width:none;margin:0 auto;padding-inline:24px}
+  @media (min-width:640px){.wrap{padding-inline:clamp(48px,7vw,160px)}}
 
   .eyebrow{
     font-family:'Archivo',sans-serif;
@@ -278,6 +278,31 @@
   .btn{display:inline-block;text-decoration:none;border:1px solid var(--fg);color:var(--fg);padding:12px 20px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-radius:2px;transition:background .15s,color .15s;white-space:nowrap}
   .btn:hover{background:var(--fg);color:#0a0a0a}
 
+  /* ---------- Wide screens ---------- */
+  @media (min-width:1200px){
+    .hero{padding-block:96px 88px}
+    .hero h1{font-size:clamp(4.6rem,6.5vw,7.5rem)}
+    .hero p.lede{font-size:1.2rem;max-width:52ch}
+    .hero-inner{justify-content:space-between}
+    .hero-photo{width:clamp(380px,32vw,560px)}
+    .section-head{grid-template-columns:260px 1fr}
+    .role{grid-template-columns:240px 1fr}
+    p{max-width:80ch}
+  }
+
+  /* ---------- Learning ---------- */
+  .learn-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+  @media (min-width:760px){.learn-grid{grid-template-columns:1fr 1fr}}
+  @media (min-width:1200px){.learn-grid{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+  .learn-card{background:var(--bg);padding:28px 26px}
+  .learn-card.learn-now{background:var(--bg-raised)}
+  .learn-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .learn-card .yr{color:var(--bright);font-size:.95rem}
+  .learn-card h3{font-size:1.1rem;font-weight:500}
+  .learn-card .school{font-size:.82rem;color:var(--faint);margin-top:6px}
+  .learn-card p{margin-top:14px;font-size:.9rem;color:var(--muted)}
+  .tag-live{color:var(--bright);border-color:var(--muted)}
+
   footer{padding-block:40px;border-top:1px solid var(--line)}
   footer .wrap{display:flex;flex-direction:column;gap:6px}
   @media (min-width:640px){footer .wrap{flex-direction:row;justify-content:space-between}}
@@ -295,6 +320,7 @@
       <a href="#press">Press</a>
       <a href="#expertise">Expertise</a>
       <a href="#advisory">Advisory</a>
+      <a href="#education">Education</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navSheet">Menu</button>
@@ -305,6 +331,7 @@
     <a href="#press">Press</a>
     <a href="#expertise">Expertise</a>
     <a href="#advisory">Advisory</a>
+    <a href="#education">Education</a>
     <a href="#contact">Contact</a>
   </div>
 </header>
@@ -620,20 +647,47 @@
   </section>
   </div>
 
-  <section class="wrap">
-    <div class="close-grid">
+  <section id="education" class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Education</div>
+      <h2>Continuous<br>learning</h2>
+      <p class="lede" style="grid-column:1/-1">After 25 years in fashion, I still treat learning as part of the job. Harvard Business School Online / Executive Education gives me rigorous frameworks from outside the industry - strategy, finance, negotiation, and now data and AI - that sharpen how I build brands, run businesses, and advise leadership teams.</p>
+    </div>
+
+    <div class="learn-grid">
+      <div class="learn-card learn-now">
+        <div class="learn-top"><span class="yr">2026</span><span class="tag tag-live">In progress</span></div>
+        <h3>Data Science and AI for Decision Making</h3>
+        <div class="school">Harvard Business School Online / Executive Education</div>
+        <p>How data, experimentation, and AI can be embedded into everyday business decisions - and how leaders build organisations that use them well. Directly relevant to how fashion companies will plan, buy, and sell in the decade ahead.</p>
+      </div>
+      <div class="learn-card">
+        <div class="learn-top"><span class="yr">2020</span></div>
+        <h3>Disruptive Strategy</h3>
+        <div class="school">Harvard Business School Online / Executive Education &middot; Prof. Clayton M. Christensen</div>
+        <p>How established players get disrupted - and how to build new growth businesses. A lens that shapes how I think about creating new categories inside established brands.</p>
+      </div>
+      <div class="learn-card">
+        <div class="learn-top"><span class="yr">2020</span></div>
+        <h3>Leading with Finance</h3>
+        <div class="school">Harvard Business School Online / Executive Education &middot; Prof. Mihir Desai</div>
+        <p>Value creation, capital allocation, and reading the numbers behind the business - the shared language with CFOs, investors, and boards.</p>
+      </div>
+      <div class="learn-card">
+        <div class="learn-top"><span class="yr">2020</span></div>
+        <h3>Negotiation Mastery</h3>
+        <div class="school">Harvard Business School Online / Executive Education &middot; Prof. Michael Wheeler</div>
+        <p>Preparing for and leading complex negotiations - with licensing partners, suppliers, and internal stakeholders.</p>
+      </div>
+    </div>
+
+    <div class="close-grid" style="margin-top:64px">
       <div>
-        <div class="eyebrow" style="margin-bottom:20px">Education</div>
-        <div class="edu-item">
-          <div class="yr">2020</div>
-          <h3>Harvard Business School</h3>
-          <div class="school">Executive Education · Boston, USA</div>
-          <p style="margin-top:10px;font-size:.88rem;color:var(--muted)">Disruptive Strategy - Prof. Clayton M. Christensen · Leading with Finance - Prof. Mihir Desai · Negotiation Mastery - Prof. Michael Wheeler</p>
-        </div>
+        <div class="eyebrow" style="margin-bottom:20px">Foundation</div>
         <div class="edu-item">
           <div class="yr">2001</div>
           <h3>Akademie Mode und Design</h3>
-          <div class="school">Fashion Design and Textile Management · AMD Hamburg, Germany</div>
+          <div class="school">Fashion Design and Textile Management &middot; AMD Hamburg, Germany</div>
         </div>
       </div>
       <div>
@@ -712,3 +766,6 @@
   });
 })();
 </script>
+<script data-goatcounter="https://marcelostwald.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
