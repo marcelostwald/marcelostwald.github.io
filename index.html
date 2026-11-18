@@ -303,6 +303,17 @@
   .learn-card p{margin-top:14px;font-size:.9rem;color:var(--muted)}
   .tag-live{color:var(--bright);border-color:var(--muted)}
 
+  /* ---------- Owner stats (private) ---------- */
+  #ownerStats{position:fixed;right:20px;bottom:20px;z-index:50;background:var(--bg-raised);border:1px solid var(--line);
+    padding:16px 18px 14px;min-width:240px;font-size:12px;color:var(--muted);box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  #ownerStats .os-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  #ownerStats .os-close{background:none;border:0;color:var(--faint);cursor:pointer;font-size:14px;padding:0}
+  #ownerStats .os-row{display:flex;justify-content:space-between;gap:24px;padding:5px 0;border-top:1px solid var(--line)}
+  #ownerStats .os-row b{color:var(--bright);font-weight:500;font-size:14px}
+  #ownerStats a{display:inline-block;margin-top:10px;color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+  #ownerStats a:hover{color:var(--bright)}
+
   footer{padding-block:40px;border-top:1px solid var(--line)}
   footer .wrap{display:flex;flex-direction:column;gap:6px}
   @media (min-width:640px){footer .wrap{flex-direction:row;justify-content:space-between}}
@@ -764,6 +775,40 @@
       }catch(e){ done(false); }
     });
   });
+})();
+</script>
+<div id="ownerStats" hidden>
+  <div class="os-head"><span>Website visitors</span><button class="os-close" id="osClose" title="Hide for now">&times;</button></div>
+  <div class="os-row"><span>Today</span><b id="osToday">&ndash;</b></div>
+  <div class="os-row"><span>Last 7 days</span><b id="osWeek">&ndash;</b></div>
+  <div class="os-row"><span>Last 30 days</span><b id="osMonth">&ndash;</b></div>
+  <div class="os-row"><span>Total</span><b id="osTotal">&ndash;</b></div>
+  <a href="https://marcelostwald.goatcounter.com" target="_blank" rel="noopener">Open full statistics &#8599;</a>
+</div>
+<script>
+(function(){
+  var KEY='mo-owner';
+  function get(){ try{ return localStorage.getItem(KEY)==='1'; }catch(e){ return false; } }
+  function set(v){ try{
+    if(v){ localStorage.setItem(KEY,'1'); localStorage.setItem('skipgc','t'); }
+    else { localStorage.removeItem(KEY); localStorage.removeItem('skipgc'); }
+  }catch(e){} }
+  if(location.hash==='#stats'){ set(true); history.replaceState(null,'',location.pathname+location.search); }
+  if(location.hash==='#nostats'){ set(false); history.replaceState(null,'',location.pathname+location.search); }
+  if(!get()) return;
+  var box=document.getElementById('ownerStats'); box.hidden=false;
+  document.getElementById('osClose').addEventListener('click',function(){ box.hidden=true; });
+  function day(n){ var d=new Date(); d.setDate(d.getDate()-n); return d.toISOString().slice(0,10); }
+  function load(id,qs){
+    fetch('https://marcelostwald.goatcounter.com/counter/TOTAL.json'+qs)
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(j){ document.getElementById(id).textContent=j.count; })
+      .catch(function(){ document.getElementById(id).textContent='n/a'; });
+  }
+  load('osToday','?start='+day(0));
+  load('osWeek','?start='+day(6));
+  load('osMonth','?start='+day(29));
+  load('osTotal','');
 })();
 </script>
 <script data-goatcounter="https://marcelostwald.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
